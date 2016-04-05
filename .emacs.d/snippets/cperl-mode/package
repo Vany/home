@@ -1,0 +1,9 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: package ...;
+# key: pack
+# binding: direct-keybinding
+# --
+package $0;
+use 5.020;
+
+1;

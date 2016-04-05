@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+
+use strict;
+use Data::Dumper;
+
+my $package = $ARGV[0];
+die unless $package;
+eval "use $package";
+
+$package =~ s{::}{/}g;
+$package.='.pm';
+
+#print "$INC{$package}";
+
+`emacsclient $INC{$package}`

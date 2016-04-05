@@ -1,0 +1,11 @@
+#!/usr/bin/perl
+
+use 5.016;
+use File::Slurp;
+use Data::AMF::Packet;
+use Data::AMF;
+use JSON::XS;
+use utf8;
+die unless $ARGV[0];
+print(JSON::XS->new->pretty->encode(Data::AMF::Packet->deserialize(read_file $ARGV[0])));
+#print(JSON::XS->new->pretty->encode(Data::AMF->new(version=>0)->deserialize(read_file $ARGV[0])));
