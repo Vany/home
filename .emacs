@@ -2,10 +2,13 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/yasnippet")
 (add-to-list 'load-path "~/.emacs.d/lisp/go-mode.el")
 (add-to-list 'load-path "~/.emacs.d/lisp/php-mode")
+(add-to-list 'load-path "~/.emacs.d/lisp/web-mode")
+(require 'web-mode)
 (require 'yasnippet)
 (require 'go-mode-autoloads)
 (require 'php-mode)
-//(eval-after-load 'php-mode '(require 'php-ext))
+;;(eval-after-load 'php-mode '(require 'php-ext))
+(add-to-list 'auto-mode-alist '("\\.tt\\'" . web-mode))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

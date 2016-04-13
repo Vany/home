@@ -1,0 +1,12 @@
+[submodule ".emacs.d/lisp/web-mode"]
+	path = .emacs.d/lisp/web-mode
+	url = https://github.com/fxbois/web-mode
+[submodule ".emacs.d/lisp/go-mode.el"]
+	path = .emacs.d/lisp/go-mode.el
+	url = https://github.com/dominikh/go-mode.el.git
+[submodule ".emacs.d/lisp/yasnippet"]
+	path = .emacs.d/lisp/yasnippet
+	url = https://github.com/capitaomorte/yasnippet
+[submodule ".emacs.d/lisp/php-mode"]
+	path = .emacs.d/lisp/php-mode
+	url = https://github.com/ejmr/php-mode
