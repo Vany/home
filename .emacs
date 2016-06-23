@@ -3,10 +3,11 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/go-mode.el")
 (add-to-list 'load-path "~/.emacs.d/lisp/php-mode")
 (add-to-list 'load-path "~/.emacs.d/lisp/web-mode")
+(add-to-list 'load-path "~/.emacs.d/lisp/csharp-mode")
 (require 'web-mode)
 (require 'yasnippet)
 (require 'go-mode-autoloads)
-(require 'php-mode)
+(require 'csharp-mode)
 ;;(eval-after-load 'php-mode '(require 'php-ext))
 (add-to-list 'auto-mode-alist '("\\.tt\\'" . web-mode))
 

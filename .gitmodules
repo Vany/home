@@ -10,3 +10,6 @@
 [submodule ".emacs.d/lisp/php-mode"]
 	path = .emacs.d/lisp/php-mode
 	url = https://github.com/ejmr/php-mode
+[submodule ".emacs.d/lisp/csharp-mode"]
+	path = .emacs.d/lisp/csharp-mode
+	url = https://github.com/josteink/csharp-mode
