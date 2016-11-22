@@ -32,7 +32,14 @@
             (auto-complete-mode 1)
             (local-set-key (kbd "<f5>") 'compile)
             ))
-(cust
+
+(add-hook 'cperl-mode-hook
+          (lambda()
+            (require 'perl-completion)
+            (perl-completion-mode t)
+            (make-variable-buffer-local 'ac-sources)
+            (setq ac-sources '(ac-source-perl-completion))))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
