@@ -8,8 +8,56 @@
 (require 'yasnippet)
 (require 'go-mode-autoloads)
 (require 'csharp-mode)
+(require 'package)
+
 ;;(eval-after-load 'php-mode '(require 'php-ext))
 (add-to-list 'auto-mode-alist '("\\.tt\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.plx\\'" . cperl-mode))
+
+
+(yas-global-mode 1)
+
+(put 'upcase-region 'disabled nil)
+
+(setq term-default-bg-color nil)
+(setq term-default-fg-color nil)
+
+(require 'perltidy)
+(defalias 'perl-mode 'cperl-mode)
+(setq cperl-electric-keywords t)
+
+(require 'ido)
+(ido-mode 'buffer)
+
+(global-set-key (kbd "<C-tab>") 'indent-region)
+(global-set-key (kbd "C-$")   'perltidy-region)
+(global-set-key (kbd "<f5>") 'compile)
+(global-set-key (kbd "C-%") 'delete-trailing-whitespace)
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+;; C-x buffer/window like aliases
+(global-set-key (kbd "M-o") 'other-window)
+
+;; bargain style templates
+(global-set-key (kbd "C-S-d") "use Data::Dumper; warn Dumper();")
+(global-set-key (kbd "C-S-l") "use Data::Dumper;Panda::Log->warn((caller(0))[3].':'.__LINE__.'  '.Dumper( ));")
+(global-set-key (kbd "C-~") "$DB::single=1;\n")
+
+
+(add-hook 'go-mode-hook
+          (lambda ()
+            (push '("func" . ?ƒ) prettify-symbols-alist)
+            (prettify-symbols-mode)
+            (auto-complete-mode 1)
+            (local-set-key (kbd "<f5>") 'compile)
+            ))
+
+(with-eval-after-load 'go-mode (require 'go-autocomplete))
+
+(setq package-archives
+      '(("gnu" . "http://elpa.gnu.org/packages/")
+        ("marmalade" . "http://marmalade-repo.org/packages/")
+        ("melpa" . "http://melpa.org/packages/")))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -32,6 +80,7 @@
  '(tool-bar-mode nil)
  '(savehist-mode t)
  '(global-linum-mode t))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -41,61 +90,17 @@
  '(cperl-array-face ((t (:foreground "yellow" :weight bold))))
  '(cperl-hash-face ((t (:foreground "Red" :slant italic :weight bold))))
  '(hl-line ((t (:background "#202730")))))
-(setq tramp-verbose 10)
 
-(yas-global-mode 1)
+(setq tramp-verbose 1)
 
-
-
-
-(put 'upcase-region 'disabled nil)
-
-(setq term-default-bg-color nil)
-(setq term-default-fg-color nil)
-
-(require 'perltidy)
-(defalias 'perl-mode 'cperl-mode)
-(setq cperl-electric-keywords t)
-
-(require 'ido)
-(ido-mode 'buffer)
-
-
-
-(global-set-key (kbd "<C-tab>") 'indent-region)
-(global-set-key (kbd "C-S-d") "use Data::Dumper; warn Dumper();")
-(global-set-key (kbd "C-S-l") "use Data::Dumper;Panda::Log->warn((caller(0))[3].':'.__LINE__.'  '.Dumper( ));")
-(global-set-key (kbd "C-S-s") "sub {\n\tmy ($self, ) = @_; \n}")
-(global-set-key (kbd "C-~") "$DB::single=1;\n")
-(global-set-key (kbd "C-$")   'perltidy-region)
-(global-set-key (kbd "<f9>") 'touch-catalyst)
-(global-set-key (kbd "C-%") 'delete-trailing-whitespace)
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-
-
-;; (defun highlight-publish_notification()
-;;   "highlighht"
-;;   (highlight-regexp "publish_notification"  "hi-green")
-;;   )
-
-;;     )
-;; (global-set-key (kbd "C-#") 'highlight-publish_notification)
-
-;; (defun touch-catalyst ()
-;;   "call local instamnce of catalyst"
-;;   (interactive)
-;;   (shell-command-to-string "wget -O - http://localhost:3000/ua/index"))
-
-;; (defun emacsgrep (args)
-;;   "Run fancy grep"
-;;   (interactive "Mgrep: ")
-;;   (let (buff (get-buffer-create " *emacsgrep* "))
-;;     (switch-to-buffer buff)
-;;     (shell-command (concat "emacsgrep" " " args) buff)
-;;     (set-auto-mode)
-;;     ))
-;; (put 'erase-buffer 'disabled nil)
-
-
+(require 'localconfig)
 (server-start)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; SUDDENLY LEARNED KEYS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; | keys                 | function                       | description                                |
+;; |----------------------+--------------------------------+--------------------------------------------|
+;; | C-x C-+ and  C-x C-- | text-scale-adjust              | make font bigger/smaller in current buffer |
+;; | C-M-n and C-M-p      | forward-list and backward-list | jump balanced parentheses                  |
