@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+use strict;
+use Cwd;
+my $module = @ARGV[0];
+
+my $path = join('/', split(/::/, $module)).'.pm';
+my @rootmarkers = qw(.hg .git);
+my @libdirs = qw(lib meia/lib var/lib meia/var/lib);
+
+my $tramppath = '';
+my $saved = cwd;
+while (not_root()) {
+    exit 2 if cwd eq '/';
+    chdir '..';
+    $tramppath .='../';
+}
+my $localroot = cwd;
+
+for (@libdirs) {
+    my $fpath =  $_ . '/' . $path;
+    if (-f $localroot . '/' . $fpath) {
+        chdir $saved;
+        print $tramppath . $fpath;
+        exit 0;
+    }
+}
+
+sub not_root {
+    for (@rootmarkers) {
+        return 0 if -d $_;
+    }
+    return 1;
+}

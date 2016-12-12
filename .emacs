@@ -18,17 +18,14 @@
 (global-set-key (kbd "C-$")   'perltidy-region)
 (global-set-key (kbd "<f5>") 'compile)
 (global-set-key (kbd "C-%") 'delete-trailing-whitespace)
-;; C-x buffer/window like aliases
-(global-set-key (kbd "M-o") 'other-window)
 ;; bargain style templates
 (global-set-key (kbd "C-S-d") "use Data::Dumper; warn Dumper();")
 (global-set-key (kbd "C-S-l") "use Data::Dumper;Panda::Log->warn((caller(0))[3].':'.__LINE__.'  '.Dumper( ));")
+(global-set-key (kbd "C-S-s") "use Devel::StackTrace; Panda::Log->warn(Devel::StackTrace->new->as_string);")
 (global-set-key (kbd "C-~") "$DB::single=1;\n")
 
 (add-hook 'go-mode-hook
           (lambda ()
-            (push '("func" . ?ƒ) prettify-symbols-alist)
-            (prettify-symbols-mode)
             (auto-complete-mode 1)
             (local-set-key (kbd "<f5>") 'compile)
             ))
@@ -52,6 +49,7 @@
  '(cperl-indent-level 4)
  '(cperl-indent-parens-as-block t)
  '(custom-enabled-themes (quote (misterioso)))
+ '(elfeed-feeds (quote ("http://www.terminally-incoherent.com/blog/feed")))
  '(global-hl-line-mode t)
  '(global-linum-mode t)
  '(indent-tabs-mode nil)
@@ -66,10 +64,10 @@
  '(savehist-mode t)
  '(show-paren-delay 0.2)
  '(show-paren-mode t)
- '(tool-bar-mode nil)
- '(tramp-verbose 1)
  '(term-default-bg-color nil)
- '(term-default-fg-color nil))
+ '(term-default-fg-color nil)
+ '(tool-bar-mode nil)
+ '(tramp-verbose 1))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -83,8 +81,28 @@
 
 
 
+(defun work-perl-find-module ()
+  "Find workproject perlmodule"
+  (interactive)
+  (let ((f (shell-command-to-string (concat  "~/bin/findperlmodule "
+                                             (thing-at-point 'symbol)
+                                             ))))
+    (message  "opening %s" f)
+    (if (equal f "")
+        (message  "not found %s" f)
+      (find-file-other-window f))))
+
 (require 'localconfig)
 (server-start)
+
+
+(fset 'window-swap
+   (lambda (&optional arg) "Keyboard mac
+
+ro." (interactive "p") (kmacro-exec-ring-item (quote ([24 98 left left return 24 111 24 98 return 24 111 return] 0 "%d")) arg)))
+
+(global-set-key (kbd "M-o") 'window-swap)
+
 
 
 (defun lastkeys() (interactive) "Suddenly learned keys" (message "
